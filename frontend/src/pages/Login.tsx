@@ -94,14 +94,16 @@ function App() {
 <Collapse in={open}>
     {validData ?
     <Alert severity="success" action={
-        <IconButton aria-label="close" color="inherit" size="small" onClick={() => { setOpen(false); }}>
+        <IconButton aria-label="close" color="inherit" size="small" 
+        onClick={() => { setOpen(false); }}>
             <CloseIcon fontSize="inherit" />
         </IconButton>
     }>
         Acceso concedido
     </Alert> : 
     <Alert severity="error" action={
-        <IconButton aria-label="close" color="inherit" size="small" onClick={() => { setOpen(false); }}>
+        <IconButton aria-label="close" color="inherit" size="small" 
+        onClick={() => { setOpen(false); }}>
             <CloseIcon fontSize="inherit" />
         </IconButton>
     }>
