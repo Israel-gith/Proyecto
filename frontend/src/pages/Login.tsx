@@ -1,10 +1,12 @@
 import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CloseIcon from '@mui/icons-material/Close';
 import { Typography,Box, IconButton,Grid, TextField, Button, Paper,Container, Alert, Collapse} from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 
-function App() {
+function Login() {
+
+  const navigate = useNavigate()
 
     const[data, setData] = useState({
         user:'',
@@ -27,14 +29,12 @@ function App() {
     const validuser = 'israel'
     const validpassw = '1234'
 
-    const[validData, setValidData] = useState(false);
 
     const handleSubmit = (e:any) =>{
         e.preventDefault()
         {data.user==validuser && data.passw==validpassw ?
-            setValidData(true) : setValidData(false);
+            navigate('/Hme') : setOpen(true);
         };
-        setOpen(true);
         console.log('Usuario: ' + data.user)
         console.log('Contraseña: ' + data.passw)
     };
@@ -50,7 +50,7 @@ function App() {
 
             <Typography variant="h3" color="primary">Sistema de acceso</Typography>
             <IconButton>
-            {validData ? <LockOpenIcon/> : <LockIcon/>}
+            <LockIcon/>
             </IconButton>
 
           <Box component="form" onSubmit={handleSubmit} autoComplete="off">
@@ -91,25 +91,22 @@ function App() {
     
           >ACCEDER</Button>   
 
-<Collapse in={open}>
-    {validData ?
-    <Alert severity="success" action={
-        <IconButton aria-label="close" color="inherit" size="small" 
-        onClick={() => { setOpen(false); }}>
-            <CloseIcon fontSize="inherit" />
-        </IconButton>
-    }>
-        Acceso concedido
-    </Alert> : 
-    <Alert severity="error" action={
-        <IconButton aria-label="close" color="inherit" size="small" 
-        onClick={() => { setOpen(false); }}>
-            <CloseIcon fontSize="inherit" />
-        </IconButton>
-    }>
-        Usuario y/o contraseña incorrectos
-    </Alert>}
-</Collapse>
+           <Collapse in={open}>
+            <Alert severity="error" 
+            action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+             <CloseIcon fontSize="inherit" />
+            </IconButton>}>
+            Usuario y/o contraseña incorrectos
+            </Alert>
+           </Collapse>
 
            </Box>
         </Paper>
@@ -118,4 +115,4 @@ function App() {
     );
 }
 
-export default App;
+export default Login;

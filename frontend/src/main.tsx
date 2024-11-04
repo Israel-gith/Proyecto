@@ -2,7 +2,6 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import CssBaseline from '@mui/material/CssBaseline'
 import App from './App.tsx'
-
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeOptions } from '@mui/material/styles'; 
 
@@ -33,6 +32,7 @@ export const themeOptions: ThemeOptions = {
 
 
 const theme = createTheme(themeOptions);
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
