@@ -91,37 +91,23 @@ function App() {
     
           >ACCEDER</Button>   
 
-           <Collapse in={open}>
-           {validData ?
-           <Alert severity="success" 
-            action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>}>
-            Acceso concedido
-            </Alert> : 
-            <Alert severity="error" 
-            action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setOpen(false);
-                  }}
-                >
-             <CloseIcon fontSize="inherit" />
-            </IconButton>}>
-            Usuario y/o contraseña incorrectos
-            </Alert>}
-           </Collapse>
+<Collapse in={open}>
+    {validData ?
+    <Alert severity="success" action={
+        <IconButton aria-label="close" color="inherit" size="small" onClick={() => { setOpen(false); }}>
+            <CloseIcon fontSize="inherit" />
+        </IconButton>
+    }>
+        Acceso concedido
+    </Alert> : 
+    <Alert severity="error" action={
+        <IconButton aria-label="close" color="inherit" size="small" onClick={() => { setOpen(false); }}>
+            <CloseIcon fontSize="inherit" />
+        </IconButton>
+    }>
+        Usuario y/o contraseña incorrectos
+    </Alert>}
+</Collapse>
 
            </Box>
         </Paper>
