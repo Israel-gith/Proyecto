@@ -3,10 +3,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Typography,Box, IconButton,Grid, TextField, Button, Paper,Container, Alert, Collapse} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
+//Importamos el useDispatch del react-redux
+import { useDispatch} from 'react-redux'
+//Importamos las acciones que están en el fichero authSlice.ts
+import { authActions } from '../store/authSlice';
 
 function Login() {
 
+  const dispatch = useDispatch()
+
   const navigate = useNavigate()
+
+  const [open, setOpen] = useState(false);
 
     const[data, setData] = useState({
         user:'',
@@ -31,16 +39,21 @@ function Login() {
 
 
     const handleSubmit = (e:any) =>{
-        e.preventDefault()
-        {data.user==validuser && data.passw==validpassw ?
-            navigate('/Hme') : setOpen(true);
-        };
-        console.log('Usuario: ' + data.user)
-        console.log('Contraseña: ' + data.passw)
-    };
-
-    const [open, setOpen] = useState(false);
-
+      e.preventDefault()
+      {data.user==validuser && data.passw==validpassw ?
+           
+        //aquí pongo el dispatch para cambiar el estado a login en el store del redux
+          dispatch(authActions.login({
+              name: data.user, //data.user es el nombre de usuario que ha ingresado el usuario
+              rol: 'administrador'
+          })) 
+          && 
+          navigate('/Home'): setOpen(true);
+      };
+      console.log('Usuario: ' + data.user)
+      console.log('Contraseña: ' + data.passw)
+  };
+  
         return (
         <>
 

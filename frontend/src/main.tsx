@@ -4,6 +4,10 @@ import CssBaseline from '@mui/material/CssBaseline'
 import App from './App.tsx'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { ThemeOptions } from '@mui/material/styles'; 
+//Importamos el componente Provider de la librearía react-redux
+import { Provider } from 'react-redux'
+//Importamos el componente store que definimos en el fichero ./store/index
+import { store } from './store/index'
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -33,12 +37,13 @@ export const themeOptions: ThemeOptions = {
 
 const theme = createTheme(themeOptions);
 
-
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+
     <ThemeProvider theme={theme}>
-     <CssBaseline />
-    <App />
+      <CssBaseline />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ThemeProvider>
-  </StrictMode>,
-)
+
+ )
