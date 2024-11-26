@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch} from 'react-redux'
 //Importamos las acciones que están en el fichero authSlice.ts
 import { authActions } from '../store/authSlice';
+import Menu from '../components/Menu';
 
 function Login() {
 
@@ -33,33 +34,42 @@ function Login() {
             passw:e.target.value
         });
     };
+    
+    async function isVerifiedUser () {
+         fetch(`http://localhost:3030/login?user=${data.user}&password=${data.passw}`)
+            .then(response => response.json())
+            .then (response => {
+              console.log('Lo que nos llega de la base de datos: ')
+              console.log(response.data)
 
-    const validuser = 'israel'
-    const validpassw = '1234'
-
-
+              if (response.data.length !== 0){
+                 //Si hay datos es que el usuario y contraseña son los correctos. Hago el dispatch y el navigate
+                 dispatch(authActions.login({
+                   name: response.data.nombre, //data.user es el nombre de usuario que ha ingresado el usuario
+                   rol: response.data.rol
+                 }));
+                  navigate('/Home');
+                } else{
+                   //Si no, realizo la lógica para alertar al usuario con usuario/contraseña son incorrectas
+                   setOpen(true);
+                }
+             })
+  
+     }
+     
     const handleSubmit = (e:any) =>{
       e.preventDefault()
-      {data.user==validuser && data.passw==validpassw ?
-           
-        //aquí pongo el dispatch para cambiar el estado a login en el store del redux
-          dispatch(authActions.login({
-              name: data.user, //data.user es el nombre de usuario que ha ingresado el usuario
-              rol: 'administrador'
-          })) 
-          && 
-          navigate('/Home'): setOpen(true);
-      };
+      isVerifiedUser()
+
       console.log('Usuario: ' + data.user)
       console.log('Contraseña: ' + data.passw)
   };
   
         return (
         <>
-
-<Container fixed>
-         
-        <Paper elevation={5} square={false} sx={{marginTop:5, textAlign:'center'}} >
+<Menu></Menu>
+<Container fixed>  
+        <Paper elevation={5} square={false} sx={{marginTop:5, textAlign:'center'}} style={{ padding: '7px' }}>
 
             <Typography variant="h3" color="primary">Sistema de acceso</Typography>
             <IconButton>
