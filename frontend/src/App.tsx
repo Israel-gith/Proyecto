@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Reports from './pages/Reports'
 import ErrorPage from "./pages/ErrorPage";
+import GestionUsers from "./pages/GestionUsers";
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -21,7 +22,11 @@ const router = createBrowserRouter([
   {
   path: 'reports',
   element: <Reports/>
-  }
+  },
+  {
+    path: 'gestionUsers',
+    element: <GestionUsers/>
+    }
   ]
   },
  ]);

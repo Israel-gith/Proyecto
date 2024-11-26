@@ -18,7 +18,7 @@ import { useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import {Person as PersonIcon, AdminPanelSettings as AdminPanelSettingsIcon, Logout as LogoutIcon, Help as HelpIcon, Feed as ReportIcon, Menu as MenuIcon, Home as HomeIcon } from '@mui/icons-material';
+import {InsertEmoticon as InsertEmoticonIcon,Adb as AdbIcon, Person as PersonIcon, AdminPanelSettings as AdminPanelSettingsIcon, Logout as LogoutIcon, Help as HelpIcon, Feed as ReportIcon, Menu as MenuIcon, Home as HomeIcon } from '@mui/icons-material';
 
 function Menu() {
 
@@ -99,7 +99,12 @@ if (!isLoggedin) {
           )}
           {userData.userRol == "user" && (
             <IconButton color="inherit" edge="end">
-              <PersonIcon />
+              <AdbIcon />
+            </IconButton>
+          )}
+          {userData.userRol == "invitado" && (
+            <IconButton color="inherit" edge="end">
+              <InsertEmoticonIcon />
             </IconButton>
           )}
 
@@ -140,15 +145,29 @@ if (!isLoggedin) {
           </ListItem>
         </Link>
 
-        <Link to="/reports" style={{ textDecoration: 'none', color: 'inherit' }}>
+        {userData.userRol == "admin" && (
+          <Link to="/gestionUsers" style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItem >
             <ListItemIcon>
-              <ReportIcon />
+              <PersonIcon />
             </ListItemIcon>
-            <ListItemText primary="Informes" />
+            <ListItemText primary="Gestión Usuario" />
           </ListItem>
         </Link>
+          )}
+        
+        {userData.userRol !== "invitado" && (
+         <Link to="/reports" style={{ textDecoration: 'none', color: 'inherit' }}>
+         <ListItem >
+           <ListItemIcon>
+             <ReportIcon />
+           </ListItemIcon>
+           <ListItemText primary="Informes" />
+         </ListItem>
+       </Link>
+          )}
 
+        
         <Link to="/reports" style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItem >
             <ListItemIcon>

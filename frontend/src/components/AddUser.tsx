@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {
   Button,Box, Paper,Grid, TextField, Container,
   TableBody,
@@ -9,53 +8,48 @@ import {
   TableRow,
   Table} from '@mui/material';
 
-import { useSelector } from 'react-redux'
-import { RootState} from '../store/index'
-
-function Dashboard() {
+function AddUser() {
     
-//Creamos el tipo itemtype. Este tipo será un objeto con un id opcional de tipo number
-//nombre, marca y tipo de tipo string y el precio de tipo number
 interface itemtype {
     id?: number
     nombre: string
-    marca: string
-    tipo: string
-    precio: number
+    login: string
+    password: string
+    rol: string
    }
-   //Inicializo los valores del item. Aquí no pongo el id porque no lo necesito
+   
    const itemInitialState: itemtype = {
     nombre: '',
-    marca: '',
-    tipo: '',
-    precio: 0
+    login: '',
+    password: '',
+    rol: '',
    }
    
    //Cuando declaremos el useState del item en nuestro código:
-   const [item, setItem] = useState(itemInitialState)
+   const [user, setUser] = useState(itemInitialState)
    const [tableData, setTableData] = useState([]);
-   const userData = useSelector((state: RootState) => state.authenticator)
    
+  
   const handleChange = (e:any) => {
     const { name, value } = e.target;
-    setItem({
-        ...item,
-      [name]: name === 'precio' ? parseFloat(value) : value,
+    setUser({
+        ...user,
+      [name]: value,
     });
   };
 
   
-async function insertItem() {
+async function insertUser() {
     fetch(
-      `http://localhost:3030/addItem?nombre=${item.nombre}&marca=${item.marca}&tipo=${item.tipo}&precio=${item.precio}`
+      `http://localhost:3030/insertUser?nombre=${user.nombre}&login=${user.login}&password=${user.password}&rol=${user.rol}`
     )
       .then((response) => response.json())
       .then((response) => {
         console.log('Respuesta del fetch: ' + response);
       if (response > 0) {
         alert('Datos guardados con éxito');
-        setItem(itemInitialState);
-        getData();
+        setUser(itemInitialState);
+        getUser();
       } else {
         alert('Error al guardar los datos');
       }
@@ -64,13 +58,13 @@ async function insertItem() {
 
   const handleSubmit = (e:any) => {
     e.preventDefault();
-    insertItem();
+    insertUser();
   };
 
   
   // Función para obtener los datos de la tabla
-  async function getData() {
-    fetch('http://localhost:3030/getItems')
+  async function getUser() {
+    fetch('http://localhost:3030/getUser')
       .then((response) => response.json())
       .then((response) => {
         console.log('Datos obtenidos:', response.data);
@@ -79,24 +73,9 @@ async function insertItem() {
       .catch((error) => console.error('Error al obtener datos:', error));
   }
 
-  
-  async function handleDeleteItem(row: itemtype) {
-    fetch(`http://localhost:3030/deleteItem?id=${row.id}`)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log('Respuesta de eliminar: ' + response);
-        if (response !== 0) {
-          alert('Elemento eliminado con éxito');
-          getData();
-        } else {
-          alert('Error al eliminar el elemento');
-        }
-      });
-  }
-
   // Obtener datos al cargar el componente
   useEffect(() => {
-    getData();
+    getUser();
   }, []);
 
 
@@ -113,7 +92,7 @@ async function insertItem() {
             name='nombre'
             variant='outlined'
             fullWidth
-            value={item.nombre}
+            value={user.nombre}
             onChange={handleChange}
           />
         </Grid>
@@ -121,11 +100,11 @@ async function insertItem() {
         <Grid item xs={12} sm={12} md={3}>
           <TextField
             required
-            label='Marca'
-            name='marca'
+            label='Login'
+            name='login'
             variant='outlined'
             fullWidth
-            value={item.marca}
+            value={user.login}
             onChange={handleChange}
           />
         </Grid>
@@ -133,11 +112,11 @@ async function insertItem() {
         <Grid item xs={12} sm={12} md={3}>
           <TextField
             required
-            label='Tipo'
-            name='tipo'
+            label='Password'
+            name='password'
             variant='outlined'
             fullWidth
-            value={item.tipo}
+            value={user.password}
             onChange={handleChange}
           />
         </Grid>
@@ -145,12 +124,11 @@ async function insertItem() {
         <Grid item xs={12} sm={12} md={3}>
           <TextField
             required
-            label='Precio'
-            name='precio'
-            type='number'
+            label='Rol'
+            name='rol'
             variant='outlined'
             fullWidth
-            value={item.precio}
+            value={user.rol}
             onChange={handleChange}
           />
         </Grid>
@@ -158,23 +136,11 @@ async function insertItem() {
 
        </Grid>    
 
-
-       {userData.userRol !== "invitado" && (
         <Box sx={{justifyContent: 'center', marginTop: 4 }}>
-        <Button type="submit" variant="contained" >
-        + INSERTAR DATOS
-        </Button>
-        </Box>
-          )}
-          
-       {userData.userRol == "invitado" && (
-        <Box sx={{justifyContent: 'center', marginTop: 4 }}>
-        <Button type="submit" variant="contained" disabled>
-        + INSERTAR DATOS
-        </Button>
-        </Box>
-          )}
-        
+            <Button type="submit" variant="contained" >
+            + INSERTAR USUARIO
+            </Button>
+      </Box>
       
       <br /><br />
 
@@ -183,10 +149,6 @@ async function insertItem() {
             <TableHead>
                 <TableRow  
                 sx={{backgroundColor: '#5f70ce'}}>
-
-                   {userData.userRol !== "invitado" && (
-                    <TableCell></TableCell>
-                    )}
                   <TableCell>Nombre</TableCell>
                   <TableCell>Marca</TableCell>
                   <TableCell>Tipo</TableCell>
@@ -197,19 +159,10 @@ async function insertItem() {
                 <TableBody>
                     {tableData.map((row: itemtype) => (
                         <TableRow key={row.id}>
-
-                           {userData.userRol !== "invitado" && (
-                          <TableCell>
-                            <Button onClick={() => handleDeleteItem(row)}>
-                             <DeleteForeverIcon />
-                            </Button>
-                          </TableCell>
-                           )}
-                            
                             <TableCell>{row.nombre}</TableCell>
-                            <TableCell>{row.marca}</TableCell>
-                            <TableCell>{row.tipo}</TableCell>
-                            <TableCell>{row.precio}</TableCell>
+                            <TableCell>{row.login}</TableCell>
+                            <TableCell>{row.password}</TableCell>
+                            <TableCell>{row.rol}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -224,4 +177,4 @@ async function insertItem() {
   );
 }
 
-export default Dashboard;
+export default AddUser;

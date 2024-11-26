@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch} from 'react-redux'
 //Importamos las acciones que están en el fichero authSlice.ts
 import { authActions } from '../store/authSlice';
-import Menu from '../components/Menu';
 
 function Login() {
 
@@ -67,7 +66,7 @@ function Login() {
   
         return (
         <>
-<Menu></Menu>
+
 <Container fixed>  
         <Paper elevation={5} square={false} sx={{marginTop:5, textAlign:'center'}} style={{ padding: '7px' }}>
 
