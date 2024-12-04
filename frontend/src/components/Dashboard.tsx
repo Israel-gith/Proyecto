@@ -184,7 +184,7 @@ async function insertItem() {
                 <TableRow  
                 sx={{backgroundColor: '#5f70ce'}}>
 
-                   {userData.userRol !== "invitado" && (
+                   {userData.userRol == "admin" && (
                     <TableCell></TableCell>
                     )}
                   <TableCell>Nombre</TableCell>
@@ -198,7 +198,7 @@ async function insertItem() {
                     {tableData.map((row: itemtype) => (
                         <TableRow key={row.id}>
 
-                           {userData.userRol !== "invitado" && (
+                           {userData.userRol == "admin" && (
                           <TableCell>
                             <Button onClick={() => handleDeleteItem(row)}>
                              <DeleteForeverIcon />

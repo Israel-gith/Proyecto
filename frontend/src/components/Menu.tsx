@@ -145,18 +145,9 @@ if (!isLoggedin) {
           </ListItem>
         </Link>
 
-        {userData.userRol == "admin" && (
-          <Link to="/gestionUsers" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <ListItem >
-            <ListItemIcon>
-              <PersonIcon />
-            </ListItemIcon>
-            <ListItemText primary="Gestión Usuario" />
-          </ListItem>
-        </Link>
-          )}
         
-        {userData.userRol !== "invitado" && (
+        
+        {userData.userRol == "admin" && (
          <Link to="/reports" style={{ textDecoration: 'none', color: 'inherit' }}>
          <ListItem >
            <ListItemIcon>
@@ -168,7 +159,7 @@ if (!isLoggedin) {
           )}
 
         
-        <Link to="/reports" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Link to="" style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItem >
             <ListItemIcon>
               <HelpIcon />

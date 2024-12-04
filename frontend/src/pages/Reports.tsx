@@ -1,12 +1,46 @@
-import React from 'react';
-import { Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button } from '@mui/material';
 import Menu from '../components/Menu';
+import InformeColeccion from '../components/InformeColeccion';
 
 function Reports() {
-    return <>
-    <Menu></Menu>
-    <Typography variant="h4">Página Reports de Israel</Typography>
-    </>
+
+    // Estado para almacenar los datos obtenidos
+    const [datosColeccion, setDatosColeccion] = useState([]);
+
+    // Variable de control
+    const [informeGenerado, setInformeGenerado] = useState(false);
+
+    // Función para manejar el evento del botón
+    const manejarDatosColeccion = async () => {
+        fetch('http://localhost:3030/getItems')
+        .then((response) => response.json())
+        .then((response) => {
+          console.log('Datos obtenidos:', response.data);
+          setDatosColeccion(response.data); 
+
+          setInformeGenerado(true); // Cambiar la variable de control
+        })
+    };
+
+    return (
+        <>
+            <Menu />
+            <Box sx={{ justifyContent: 'center', marginTop: 4 }}>
+                <Button 
+                    variant="contained" 
+                    onClick={manejarDatosColeccion}
+                >
+                    INFORME COLECCION
+                </Button>
+            </Box>
+<br />
+            {informeGenerado && (
+                <InformeColeccion datos={datosColeccion} />
+            )}
+
+        </>
+    );
 }
 
 export default Reports;

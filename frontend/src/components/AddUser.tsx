@@ -18,7 +18,7 @@ interface itemtype {
     rol: string
    }
    
-   const itemInitialState: itemtype = {
+   const userInitialState: itemtype = {
     nombre: '',
     login: '',
     password: '',
@@ -26,7 +26,7 @@ interface itemtype {
    }
    
    //Cuando declaremos el useState del item en nuestro código:
-   const [user, setUser] = useState(itemInitialState)
+   const [user, setUser] = useState(userInitialState)
    const [tableData, setTableData] = useState([]);
    
   
@@ -48,7 +48,7 @@ async function insertUser() {
         console.log('Respuesta del fetch: ' + response);
       if (response > 0) {
         alert('Datos guardados con éxito');
-        setUser(itemInitialState);
+        setUser(userInitialState);
         getUser();
       } else {
         alert('Error al guardar los datos');
