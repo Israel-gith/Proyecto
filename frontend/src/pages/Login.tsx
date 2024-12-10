@@ -1,6 +1,6 @@
 import LockIcon from '@mui/icons-material/Lock';
 import CloseIcon from '@mui/icons-material/Close';
-import { Typography,Box, IconButton,Grid, TextField, Button, Paper,Container, Alert, Collapse} from "@mui/material";
+import { Typography,Box, IconButton,Grid, TextField, Button, Paper,Container, Alert, Collapse, Tooltip, Zoom} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 //Importamos el useDispatch del react-redux
@@ -108,10 +108,15 @@ function Login() {
 
             <br />
 
+        
+          <Tooltip title="Entrar en la aplicación"  arrow
+            slots={{
+            transition: Zoom,
+            }}>
            <Button type="submit" variant='contained' 
            fullWidth
-    
-          >ACCEDER</Button>   
+           >ACCEDER</Button>   
+           </Tooltip>
 
            <Collapse in={open}>
             <Alert severity="error" 

@@ -7,7 +7,9 @@ import {
   TableContainer,
   TableCell,
   TableRow,
-  Table} from '@mui/material';
+  Table,
+  Tooltip,
+  Zoom} from '@mui/material';
 
 import { useSelector } from 'react-redux'
 import { RootState} from '../store/index'
@@ -161,18 +163,28 @@ async function insertItem() {
 
        {userData.userRol !== "invitado" && (
         <Box sx={{justifyContent: 'center', marginTop: 4 }}>
-        <Button type="submit" variant="contained" >
-        + INSERTAR DATOS
-        </Button>
+         <Tooltip title="Añadir datos en la tabla"  arrow
+          slots={{
+          transition: Zoom,
+          }}>
+           <Button type="submit" variant="contained">
+           + INSERTAR DATOS
+           </Button>
+         </Tooltip>
         </Box>
           )}
           
        {userData.userRol == "invitado" && (
         <Box sx={{justifyContent: 'center', marginTop: 4 }}>
-        <Button type="submit" variant="contained" disabled>
-        + INSERTAR DATOS
-        </Button>
-        </Box>
+        <Tooltip title="Añadir datos en la tabla"  arrow
+         slots={{
+         transition: Zoom,
+         }}>
+          <Button type="submit" variant="contained" disabled>
+          + INSERTAR DATOS
+          </Button>
+        </Tooltip>
+       </Box>
           )}
         
       
@@ -200,9 +212,14 @@ async function insertItem() {
 
                            {userData.userRol == "admin" && (
                           <TableCell>
+                            <Tooltip title="Borrrar fila" placement='right' arrow
+                             slots={{
+                              transition: Zoom,
+                              }}>
                             <Button onClick={() => handleDeleteItem(row)}>
                              <DeleteForeverIcon />
                             </Button>
+                            </Tooltip>
                           </TableCell>
                            )}
                             

@@ -6,7 +6,9 @@ import {
   TableContainer,
   TableCell,
   TableRow,
-  Table} from '@mui/material';
+  Table,
+  Tooltip,
+  Zoom} from '@mui/material';
 
 function AddUser() {
     
@@ -136,10 +138,15 @@ async function insertUser() {
 
        </Grid>    
 
-        <Box sx={{justifyContent: 'center', marginTop: 4 }}>
-            <Button type="submit" variant="contained" >
-            + INSERTAR USUARIO
-            </Button>
+      <Box sx={{justifyContent: 'center', marginTop: 4 }}>
+        <Tooltip title="Añadir usuario a la BD"  arrow
+          slots={{
+          transition: Zoom,
+          }}>
+           <Button type="submit" variant="contained">
+           + INSERTAR USUARIO
+           </Button>
+        </Tooltip>
       </Box>
       
       <br /><br />

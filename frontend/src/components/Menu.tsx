@@ -17,7 +17,7 @@ import { authActions } from '../store/authSlice';
 import { useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItem, ListItemIcon, ListItemText, Tooltip, Zoom } from '@mui/material';
 import {InsertEmoticon as InsertEmoticonIcon,Adb as AdbIcon, Person as PersonIcon, AdminPanelSettings as AdminPanelSettingsIcon, Logout as LogoutIcon, Help as HelpIcon, Feed as ReportIcon, Menu as MenuIcon, Home as HomeIcon } from '@mui/icons-material';
 
 function Menu() {
@@ -72,8 +72,11 @@ if (!isLoggedin) {
           }),backgroundColor: '#5f70ce'
         }}
       >
-        <Toolbar>
-         
+    <Toolbar>
+      <Tooltip title="Menu" placement="right" arrow
+        slots={{
+          transition: Zoom,
+         }} >
           <IconButton
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -85,6 +88,7 @@ if (!isLoggedin) {
           >
             <MenuIcon />
           </IconButton>
+       </Tooltip>
 
 
           <Typography variant="h6" noWrap sx={{ flexGrow: 1, textAlign: 'center' }}>
@@ -108,7 +112,9 @@ if (!isLoggedin) {
             </IconButton>
           )}
 
-        </Toolbar>
+      </Toolbar>
+
+
       </AppBar>
       <Drawer
         sx={{
@@ -131,11 +137,21 @@ if (!isLoggedin) {
             justifyContent: 'flex-end',
           }}
         >
+        <Tooltip title="Atras" placement="left" arrow 
+        slots={{
+          transition: Zoom,
+        }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
+        </Tooltip>
+
         </Box>
 
+        <Tooltip title="Ir a Home" placement="right" arrow
+        slots={{
+          transition: Zoom,
+        }}>
         <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItem >
             <ListItemIcon>
@@ -144,10 +160,29 @@ if (!isLoggedin) {
             <ListItemText primary="Inicio" />
           </ListItem>
         </Link>
+        </Tooltip>
 
-        
+        {userData.userRol == "admin" && (
+          <Tooltip title="Ir a gestion de usuarios" placement="right" arrow
+          slots={{
+            transition: Zoom,
+          }}>
+          <Link to="/gestionUsers" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <ListItem >
+            <ListItemIcon>
+              <PersonIcon />
+            </ListItemIcon>
+            <ListItemText primary="Gestión Usuario" />
+          </ListItem>
+        </Link>
+        </Tooltip>
+          )}
         
         {userData.userRol == "admin" && (
+        <Tooltip title="Generador de informes" placement="right" arrow
+        slots={{
+          transition: Zoom,
+        }}>
          <Link to="/reports" style={{ textDecoration: 'none', color: 'inherit' }}>
          <ListItem >
            <ListItemIcon>
@@ -156,10 +191,15 @@ if (!isLoggedin) {
            <ListItemText primary="Informes" />
          </ListItem>
        </Link>
+       </Tooltip>
           )}
 
         
-        <Link to="" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Tooltip title="Manual de Usuario" placement="right" arrow
+      slots={{
+        transition: Zoom,
+      }}>
+        <Link to={'/ManualUsuario.pdf'} target='_blank' style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItem >
             <ListItemIcon>
               <HelpIcon />
@@ -167,7 +207,12 @@ if (!isLoggedin) {
             <ListItemText primary="Ayuda" />
           </ListItem>
         </Link>
+      </Tooltip>
 
+      <Tooltip title="Logout" placement="right" arrow
+      slots={{
+        transition: Zoom,
+      }}> 
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItem onClick={salir}>
             <ListItemIcon>
@@ -176,6 +221,8 @@ if (!isLoggedin) {
             <ListItemText primary="Salir" />
           </ListItem>
         </Link>
+      </Tooltip>
+      
       </Drawer>
 
       <br /><br />

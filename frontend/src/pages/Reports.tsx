@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Tooltip, Zoom } from '@mui/material';
 import Menu from '../components/Menu';
 import InformeColeccion from '../components/InformeColeccion';
 
@@ -27,14 +27,19 @@ function Reports() {
         <>
             <Menu />
             <Box sx={{ justifyContent: 'center', marginTop: 4 }}>
+             <Tooltip title="Abrir generador de informes"  arrow
+              slots={{
+                transition: Zoom,
+                }}>
                 <Button 
                     variant="contained" 
                     onClick={manejarDatosColeccion}
                 >
                     INFORME COLECCION
                 </Button>
+             </Tooltip>
             </Box>
-<br />
+<br /><br />
             {informeGenerado && (
                 <InformeColeccion datos={datosColeccion} />
             )}
