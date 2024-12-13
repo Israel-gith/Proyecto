@@ -5,6 +5,7 @@ const cors = require('cors')
 const login = require('./services/login')
 const items = require('./services/items');
 const users = require('./services/users');
+const deval = require('./services/deval');
 
 //Definimos el puerto por que va a escuchar nuestra API las peticiones
 const port  = 3030
@@ -83,6 +84,15 @@ app.get('/getUser', async function(req, res, next) {
        res.json(await users.getUser())
     } catch (err) {
     console.error(`Error while getting user `, err.message);
+    next(err);
+    }
+   })
+
+   app.get('/getDeval', async function(req, res, next) {
+    try {
+       res.json(await deval.getDeval())
+    } catch (err) {
+    console.error(`Error while getting deval `, err.message);
     next(err);
     }
    })
